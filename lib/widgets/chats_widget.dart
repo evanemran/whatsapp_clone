@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/models/message_model.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
+import 'package:whatsapp_clone/pages/inbox_page.dart';
 import 'package:whatsapp_clone/utils/AppColors.dart';
 
 import '../models/chat_model.dart';
@@ -64,7 +65,7 @@ class _ChatWidgetState extends State<ChatWidget> {
           var ind = Random().nextInt(mList.length-1);
           return InkWell(
             onTap: () {
-
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => InboxPage(user: item, list: mList)));
             },
             child: Padding(
               padding: const EdgeInsets.all(16),
