@@ -19,8 +19,24 @@ class InboxPage extends StatefulWidget {
 }
 
 class _InboxPageState extends State<InboxPage> {
+  final ScrollController scrollController = ScrollController();
+  // void scrollToBottom() {
+  //   scrollController.animateTo(
+  //     0.0,
+  //     curve: Curves.easeOut,
+  //     duration: const Duration(milliseconds: 300),
+  //   );
+  // }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    // scrollToBottom();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.main,
@@ -60,6 +76,7 @@ class _InboxPageState extends State<InboxPage> {
         child: Column(
           children: [
             Expanded(child: ListView.builder(
+                controller: scrollController,
                 itemCount: widget.list.length,
                 itemBuilder: (context, position) {
                   var item = widget.list[position];
