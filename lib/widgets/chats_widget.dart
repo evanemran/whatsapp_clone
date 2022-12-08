@@ -6,6 +6,7 @@ import 'package:whatsapp_clone/models/message_model.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/pages/inbox_page.dart';
 import 'package:whatsapp_clone/utils/AppColors.dart';
+import 'package:whatsapp_clone/widgets/user_dialog.dart';
 
 import '../models/chat_model.dart';
 
@@ -78,7 +79,22 @@ class _ChatWidgetState extends State<ChatWidget> {
                     radius: 25,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25.0),
-                      child: Image.asset(item.photo, height: 60, width: 60, fit: BoxFit.cover),),
+                      child: InkWell(onTap: () {
+                        showGeneralDialog(
+                          context: context,
+                          pageBuilder: (ctx, a1, a2) {
+                            return Container();
+                          },
+                          transitionBuilder: (ctx, a1, a2, child) {
+                            var curve = Curves.easeInOut.transform(a1.value);
+                            return Transform.scale(
+                              scale: curve,
+                              child: UserDialog(user: item,),
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 300),
+                        );
+                      }, child: Image.asset(item.photo, height: 60, width: 60, fit: BoxFit.cover),),),
                   ),
                   const SizedBox(width: 10,),
                   Expanded(child: Column(
