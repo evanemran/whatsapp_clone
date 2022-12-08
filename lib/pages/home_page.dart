@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             controller: _controller,
             indicatorColor: Colors.white,
             tabs: const [
-              SizedBox(height: 50, width: 30, child: Icon(Icons.group, size: 18,),),
+              SizedBox(height: 50, width: 30, child: Icon(Icons.groups, size: 24,),),
               Tab(
                 text: "CHATS",
               ),
