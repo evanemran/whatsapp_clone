@@ -20,13 +20,15 @@ class InboxPage extends StatefulWidget {
 
 class _InboxPageState extends State<InboxPage> {
   final ScrollController scrollController = ScrollController();
-  // void scrollToBottom() {
-  //   scrollController.animateTo(
-  //     0.0,
-  //     curve: Curves.easeOut,
-  //     duration: const Duration(milliseconds: 300),
-  //   );
-  // }
+  void scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    });
+  }
   @override
   void initState() {
     super.initState();
@@ -36,35 +38,63 @@ class _InboxPageState extends State<InboxPage> {
   }
   @override
   Widget build(BuildContext context) {
-    // scrollToBottom();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.main,
-        title: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0,4,4,4),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 20,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Image.asset(widget.user.photo, height: 40, width: 40, fit: BoxFit.cover),),
-              ),
+        leadingWidth: 80,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Row(
+              children: [
+                const Icon(Icons.arrow_back, color: Colors.white, size: 24,),
+                const SizedBox(width: 4,),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0,4,4,4),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 20,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Image.asset(widget.user.photo, height: 40, width: 40, fit: BoxFit.cover),),
+                  ),
+                ),
+              ],
             ),
-            Text(widget.user.name)
-          ],
+          ),
         ),
-        // leading: Padding(
-        //   padding: const EdgeInsets.all(4),
-        //   child: CircleAvatar(
-        //     backgroundColor: Colors.white,
-        //     radius: 20,
-        //     child: ClipRRect(
-        //       borderRadius: BorderRadius.circular(20.0),
-        //       child: Image.asset(widget.user.photo, height: 40, width: 40, fit: BoxFit.cover),),
-        //   ),
-        // ),
+        title: InkWell(
+          onTap: () {
+
+          },
+          child: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.user.name),
+                  Text("Last seen ${widget.user.lastOnline}", style: const TextStyle(color: Colors.white70, fontSize: 12),),
+                ],
+              ),
+          ),
+        ),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.videocam_sharp, color: Colors.white,)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.call, color: Colors.white,)),
+          PopupMenuButton(itemBuilder: (context) {
+            return [
+              const PopupMenuItem(child: Text("View Contact", style: TextStyle(color: Colors.black, fontSize: 16),)),
+              const PopupMenuItem(child: Text("Media, links and docs", style: TextStyle(color: Colors.black, fontSize: 16),)),
+              const PopupMenuItem(child: Text("Search", style: TextStyle(color: Colors.black, fontSize: 16),)),
+              const PopupMenuItem(child: Text("Mute notifications", style: TextStyle(color: Colors.black, fontSize: 16),)),
+              const PopupMenuItem(child: Text("Disappearing messages", style: TextStyle(color: Colors.black, fontSize: 16),)),
+              const PopupMenuItem(child: Text("Wallpaper", style: TextStyle(color: Colors.black, fontSize: 16),)),
+              const PopupMenuItem(child: Text("More", style: TextStyle(color: Colors.black, fontSize: 16),)),
+            ];
+          })
+        ],
       ),
       body: Container(
           decoration: const BoxDecoration(
@@ -82,18 +112,23 @@ class _InboxPageState extends State<InboxPage> {
                   var item = widget.list[position];
                   if(item.type==0) {
                     return InkWell(
-                      child: SentMessage(message: widget.list[position].text, time: widget.list[position].time,),
+                      child: SentMessage(message: widget.list[position]),
                     );
                   }
                   else {
                     return InkWell(
-                      child: ReceivedMessage(message: widget.list[position].text, time: widget.list[position].time,),
+                      child: ReceivedMessage(message: widget.list[position]),
                     );
                   }
                 })),
-            const Align(
+            Align(
               alignment: Alignment.bottomCenter,
-              child: BottomBarWidget(),
+              child: BottomBarWidget(onCLicked: (text) {
+                setState(() {
+                  widget.list.add(Message(text, 0, "Just now", true, false, ""));
+                  scrollToBottom();
+                });
+              },),
             )
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/models/message_model.dart';
 import 'package:whatsapp_clone/utils/AppColors.dart';
 import 'package:whatsapp_clone/widgets/triangle_widget.dart';
 
@@ -6,11 +7,10 @@ import 'dart:math' as math;
 
 class ReceivedMessage extends StatelessWidget {
   const ReceivedMessage({
-    Key? key, required this.message, required this.time,
+    Key? key, required this.message,
   }) : super(key: key);
 
-  final String message;
-  final String time;
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +28,37 @@ class ReceivedMessage extends StatelessWidget {
             ),
             Flexible(
               child: Container(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(8),
                 decoration: const BoxDecoration(
                   color: AppColors.receivedMessage,
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(18),
-                    bottomLeft: Radius.circular(18),
-                    bottomRight: Radius.circular(18),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
                   ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Visibility(visible: message.haveAttachment, child: Image.asset(message.attachment, width: 220, height: 350, fit: BoxFit.cover,)),
                     Text(
-                      message,
+                      message.text,
                       style: const TextStyle(color: Colors.black, fontFamily: 'Monstserrat', fontSize: 16),
                     ),
                     const SizedBox(height: 4,),
-                    Text(
-                      time,
-                      style: const TextStyle(color: Colors.black45, fontFamily: 'Monstserrat', fontSize: 12),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          message.time,textAlign: TextAlign.end,
+                          style: const TextStyle(color: Colors.black, fontFamily: 'Monstserrat', fontSize: 12),
+                        ),
+                        // const SizedBox(width: 8,),
+                        // Image.asset("assets/read.png", color: Colors.blue, width: 14, height: 14,)
+                      ],
                     )
                   ],
                 ),

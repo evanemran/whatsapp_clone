@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import '../utils/AppColors.dart';
 
 class BottomBarWidget extends StatefulWidget {
-  const BottomBarWidget({Key? key}) : super(key: key);
+  const BottomBarWidget({Key? key, required this.onCLicked}) : super(key: key);
+
+  final Function(String) onCLicked;
 
   @override
   State<BottomBarWidget> createState() => _BottomBarWidgetState();
@@ -42,7 +44,7 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
                     }
                     else{
                       setState(() {
-                        fabIcon = Icons.send;
+                        fabIcon = Icons.send_rounded;
                       });
                     }
                   },
@@ -66,7 +68,12 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
             backgroundColor: AppColors.main,
             tooltip: '',
             child: Icon(fabIcon, color: Colors.white,),
-              onPressed: () {},
+              onPressed: () {
+              if(textEditingController.text.trim().isNotEmpty) {
+                widget.onCLicked.call(textEditingController.text.toString());
+                textEditingController.clear();
+              }
+              },
           )
         ],
       ),
