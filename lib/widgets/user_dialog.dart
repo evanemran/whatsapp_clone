@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
+import 'package:whatsapp_clone/pages/call_page.dart';
+import 'package:whatsapp_clone/pages/inbox_page.dart';
 import 'package:whatsapp_clone/utils/AppColors.dart';
 
 class UserDialog extends StatefulWidget {
@@ -40,8 +42,8 @@ class _UserDialogState extends State<UserDialog> {
             height: 50,
             child: Row(
               children: [
-                Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.message, color: AppColors.main,))),
-                Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.call, color: AppColors.main,))),
+                Expanded(child: IconButton(onPressed: () {Navigator.pop(context); Navigator.of(context).push(MaterialPageRoute(builder: (context) => InboxPage(user: widget.user)));}, icon: const Icon(Icons.message, color: AppColors.main,))),
+                Expanded(child: IconButton(onPressed: () {Navigator.pop(context); Navigator.of(context).push(MaterialPageRoute(builder: (context) => CallPage(user: widget.user)));}, icon: const Icon(Icons.call, color: AppColors.main,))),
                 Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.videocam_sharp, color: AppColors.main,))),
                 Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.info_outline, color: AppColors.main,))),
               ],

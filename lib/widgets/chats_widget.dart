@@ -68,7 +68,7 @@ class _ChatWidgetState extends State<ChatWidget> {
           var ind = Random().nextInt(mList.length-1);
           return InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => InboxPage(user: item, list: mList)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => InboxPage(user: item)));
             },
             child: Padding(
               padding: const EdgeInsets.all(16),
