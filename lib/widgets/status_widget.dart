@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/models/status_model.dart';
 
+import '../pages/story_page.dart';
+
 class StatusWidget extends StatefulWidget {
   const StatusWidget({Key? key}) : super(key: key);
 
@@ -73,7 +75,7 @@ class _StatusWidgetState extends State<StatusWidget> {
 
               return InkWell(
                 onTap: () {
-                  //Navigator.of(context).push(MaterialPageRoute(builder: (context) => InboxPage(user: item, list: mList)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StoryPage()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16),

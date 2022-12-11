@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/pages/call_page.dart';
 import 'package:whatsapp_clone/utils/AppColors.dart';
 
 import '../models/call_model.dart';
+import '../models/user_model.dart';
 
 class CallsWidget extends StatefulWidget {
   const CallsWidget({Key? key}) : super(key: key);
@@ -136,7 +138,7 @@ class _CallsWidgetState extends State<CallsWidget> {
                         ),
                       ),
                       ),
-                      Icon(item.isVideoCall ? Icons.videocam_sharp : Icons.call, color: AppColors.main,)
+                      InkWell(child: Icon(item.isVideoCall ? Icons.videocam_sharp : Icons.call, color: AppColors.main,), onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => CallPage(user: User(0, "Maria", "2 hour ago", "900978459", "assets/maria.png", "Hey there! I am using WhatsApp.", ),)));},)
                     ],
                   ),
                 ),

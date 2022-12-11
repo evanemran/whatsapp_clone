@@ -14,10 +14,24 @@ class CallPage extends StatefulWidget {
 }
 
 class _CallPageState extends State<CallPage> {
+
+  var swipeIcon = "assets/upload.png";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ExpandableBottomSheet(
+        enableToggle: true,
+        onIsExtendedCallback: () {
+          setState(() {
+            swipeIcon = "assets/download.png";
+          });
+        },
+        onIsContractedCallback: () {
+          setState(() {
+            swipeIcon = "assets/upload.png";
+          });
+        },
         background: Container(
           padding: const EdgeInsets.all(16),
           decoration: const BoxDecoration(
@@ -56,19 +70,23 @@ class _CallPageState extends State<CallPage> {
         persistentHeader: Container(
           padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
           color: AppColors.blueGrey,
-          child: Center(
-            child: Row(
-              children: [
-                Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.volume_up_sharp, color: Colors.white,))),
-                Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.videocam, color: Colors.white54,))),
-                Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.mic_off_sharp, color: Colors.white,))),
-                Expanded(child: CircleAvatar(backgroundColor: Colors.red, radius: 24, child: Image.asset("assets/call_end.png", color: Colors.white, width: 24, height: 24,),))
-              ],
-            ),
+          child: Column(
+            children: [
+              Image.asset(swipeIcon, color: Colors.white54, width: 24, height: 24, fit: BoxFit.fitHeight,),
+              const SizedBox(height: 8,),
+              Row(
+                children: [
+                  Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.volume_up_sharp, color: Colors.white,))),
+                  Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.videocam, color: Colors.white54,))),
+                  Expanded(child: IconButton(onPressed: () {}, icon: const Icon(Icons.mic_off_sharp, color: Colors.white,))),
+                  Expanded(child: InkWell(child: CircleAvatar(backgroundColor: Colors.red, radius: 24, child: Image.asset("assets/call_end.png", color: Colors.white, width: 24, height: 24,),), onTap: () {Navigator.pop(context);},))
+                ],
+              )
+            ],
           ),
         ),
         expandableContent: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           height: 180,
           color: AppColors.blueGrey,
           child: Column(
