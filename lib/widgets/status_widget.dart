@@ -75,7 +75,7 @@ class _StatusWidgetState extends State<StatusWidget> {
 
               return InkWell(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StoryPage()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => StoryPage(model: item,)));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16),
