@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   late TabController _controller;
   int _selectedIndex = 0;
   var fabIcon = Icons.message;
+  bool isSearchVisible = true;
 
   @override
   void initState() {
@@ -29,15 +30,19 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         switch (_selectedIndex) {
           case 0:
             fabIcon = Icons.group;
+            isSearchVisible = false;
             break;
           case 1:
             fabIcon = Icons.message;
+            isSearchVisible = true;
             break;
           case 2:
             fabIcon = Icons.camera_alt;
+            isSearchVisible = true;
             break;
           case 3:
             fabIcon = Icons.add_ic_call_outlined;
+            isSearchVisible = true;
             break;
         }
       });
@@ -62,7 +67,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
           actions: [
             IconButton(onPressed: () {}, icon: Image.asset("assets/camera.png", width: 20, height: 20, color: Colors.white,)),
-            IconButton(onPressed: () {}, icon: Image.asset("assets/search.png", width: 20, height: 20, color: Colors.white,)),
+            Visibility(visible: isSearchVisible, child: IconButton(onPressed: () {}, icon: Image.asset("assets/search.png", width: 20, height: 20, color: Colors.white,))),
             PopupMenuButton(itemBuilder: (context) {
               return [
                 const PopupMenuItem(child: Text("New group", style: TextStyle(color: Colors.black, fontSize: 16),)),
@@ -78,9 +83,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             indicatorColor: Colors.white,
             tabs: const [
               SizedBox(height: 50, width: 30, child: Icon(Icons.groups, size: 24,),),
-              Tab(
+              Expanded(child: Tab(
                 text: "CHATS",
-              ),
+              )),
               Tab(
                 text: "STATUS",
               ),
